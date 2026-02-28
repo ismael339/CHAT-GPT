@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de precio final real con IVA, comisiones y extras</title>
+    <meta
+      name="description"
+      content="Calcula el precio final real de un producto o servicio con IVA, comisiones y gastos extra. Obtén el desglose completo al instante y evita sorpresas al pagar."
+    />
+    <meta
+      name="keywords"
+      content="calcular precio final con IVA, precio real con comisiones, calculadora precio final online, cuánto pagaré realmente"
+    />
+    <link rel="canonical" href="https://ejemplo.com/" />
+    <meta property="og:title" content="Calcula el precio final real en segundos" />
+    <meta
+      property="og:description"
+      content="Calculadora online para saber cuánto pagarás realmente sumando impuestos, comisiones y gastos adicionales."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ejemplo.com/" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Incluye IVA?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí. Puedes elegir el país y la calculadora aplica automáticamente el impuesto estimado para mostrar el total final."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Funciona para servicios?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí. Sirve para productos y servicios, ya que puedes añadir comisiones y gastos extra según tu caso."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Es gratis?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, esta herramienta es gratuita y no requiere registro."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="hero wrapper">
+      <div>
+        <p class="eyebrow">Calculadora precio final online</p>
+        <h1>Calcula el precio final real en segundos</h1>
+        <p class="subtitle">
+          Descubre cuánto pagarás realmente con impuestos, comisiones y gastos extra.
+          Sin registros, sin descargas y con resultado instantáneo.
+        </p>
+        <ul class="hero-points">
+          <li>⚡ Cálculo al instante</li>
+          <li>✅ Gratis y sin registro</li>
+          <li>🌍 Válido para varios países</li>
+        </ul>
+      </div>
+      <section class="card" aria-label="Calculadora de precio final real">
+        <h2>Calculadora interactiva</h2>
+        <p class="card-subtitle">Rellena los campos y verás el total final en tiempo real.</p>
+        <form id="price-form" novalidate>
+          <label for="basePrice">Precio base (moneda local)</label>
+          <input id="basePrice" name="basePrice" type="number" min="0" step="0.01" value="100" />
+
+          <label for="country">País (impuesto estimado)</label>
+          <select id="country" name="country">
+            <option value="es" data-tax="21">España (IVA 21%)</option>
+            <option value="mx" data-tax="16">México (IVA 16%)</option>
+            <option value="ar" data-tax="21">Argentina (IVA 21%)</option>
+            <option value="co" data-tax="19">Colombia (IVA 19%)</option>
+            <option value="cl" data-tax="19">Chile (IVA 19%)</option>
+            <option value="us" data-tax="0">Estados Unidos (sin IVA federal)</option>
+          </select>
+
+          <div class="grid-2">
+            <div>
+              <label for="commissionPercent">Comisión (%)</label>
+              <input id="commissionPercent" name="commissionPercent" type="number" min="0" step="0.01" value="3" />
+            </div>
+            <div>
+              <label for="commissionFixed">Comisión fija (moneda local)</label>
+              <input id="commissionFixed" name="commissionFixed" type="number" min="0" step="0.01" value="1.5" />
+            </div>
+          </div>
+
+          <label for="extraCosts">Gastos extra (moneda local): envío, gestión, etc.</label>
+          <input id="extraCosts" name="extraCosts" type="number" min="0" step="0.01" value="4.95" />
+
+          <div class="actions">
+            <button type="button" id="fillExample" class="btn btn-primary">Cargar ejemplo</button>
+            <button type="button" id="clearForm" class="btn btn-ghost">Limpiar</button>
+          </div>
+        </form>
+
+        <section class="result" aria-live="polite" aria-atomic="true">
+          <p class="total-label">Precio final real</p>
+          <p class="total" id="finalPrice">€0.00</p>
+          <ul>
+            <li><span>Precio base</span><strong id="breakdownBase">€0.00</strong></li>
+            <li><span id="breakdownTaxLabel">Impuestos</span><strong id="breakdownTax">€0.00</strong></li>
+            <li><span>Comisión (%)</span><strong id="breakdownCommissionPercent">€0.00</strong></li>
+            <li><span>Comisión fija</span><strong id="breakdownCommissionFixed">€0.00</strong></li>
+            <li><span>Gastos extra</span><strong id="breakdownExtras">€0.00</strong></li>
+          </ul>
+        </section>
+      </section>
+    </header>
+
+    <main class="wrapper seo-copy">
+      <section>
+        <h2>¿Qué es el precio final real y por qué deberías calcularlo?</h2>
+        <p>
+          El precio final real es la cantidad total que sale de tu bolsillo al comprar un producto
+          o contratar un servicio. Parece obvio, pero en la práctica muchos usuarios solo ven el
+          precio base y no contemplan los cargos adicionales que aparecen en el último paso del pago.
+          Cuando eso ocurre, se produce una sensación de “precio engañoso” que reduce la confianza,
+          genera abandonos de carrito y complica la comparación entre opciones. Esta calculadora te
+          ayuda a evitar ese problema porque suma de forma transparente impuestos, comisiones y gastos
+          extra para que puedas tomar decisiones con información completa desde el primer minuto.
+        </p>
+        <p>
+          Si alguna vez buscaste en Google “calcular precio final con IVA” o “cuánto pagaré realmente”,
+          ya sabes por qué esta herramienta resulta tan útil: el valor anunciado casi nunca coincide
+          exactamente con el total final. En comercio electrónico aparecen costes de envío y gestión;
+          en plataformas de servicios pueden añadirse tasas de pasarela, comisión por intermediación o
+          recargos por método de pago. Incluso cuando el porcentaje de impuesto es conocido, hacerlo a
+          mano cada vez consume tiempo y aumenta el riesgo de errores. Aquí lo tienes resuelto en una
+          interfaz simple y rápida.
+        </p>
+      </section>
+
+      <section>
+        <h2>Por qué los precios pueden parecer más bajos de lo que son</h2>
+        <h3>1. El precio base no suele incluir todos los conceptos</h3>
+        <p>
+          Muchas ofertas muestran únicamente el importe base para resultar más competitivas en listados
+          o anuncios. El problema aparece al finalizar la compra, cuando se agregan impuestos o
+          comisiones de operación. No se trata siempre de mala práctica: a veces depende de la normativa
+          fiscal de cada país o del tipo de servicio. Aun así, para el usuario final lo que importa es
+          una cifra concreta: cuánto termina pagando.
+        </p>
+
+        <h3>2. Las comisiones se aplican de diferentes formas</h3>
+        <p>
+          Hay comisiones porcentuales, comisiones fijas y modelos mixtos. Un marketplace puede cobrar
+          un 10% al vendedor, una pasarela puede añadir 2,9% + una cantidad fija, y un proveedor de
+          servicios puede repercutir gastos administrativos. Al separar la comisión porcentual de la fija,
+          esta calculadora refleja situaciones reales y permite ajustar cada variable en segundos.
+        </p>
+
+        <h3>3. Los gastos extra cambian según contexto</h3>
+        <p>
+          El coste de envío, embalaje, urgencia o gestión no es constante. Puede variar por zona,
+          volumen, método de entrega o temporada. Por eso conviene disponer de un campo flexible que
+          admita cualquier gasto adicional y te dé el total actualizado en tiempo real.
+        </p>
+      </section>
+
+      <section>
+        <h2>Ejemplos reales de uso</h2>
+        <p>
+          <strong>Ejemplo 1 (producto físico):</strong> ves un artículo a 100 €. En España se suma 21%
+          de IVA, una comisión de plataforma del 3%, una comisión fija de 1,50 € y 4,95 € de envío.
+          Resultado: el total sube de forma notable frente al precio inicial. Con esta calculadora lo
+          detectas al instante y evitas sorpresas antes de pagar.
+        </p>
+        <p>
+          <strong>Ejemplo 2 (servicio digital):</strong> un profesional ofrece una sesión por 80 €.
+          Al añadir impuesto local, comisión de procesamiento y gastos de gestión, el precio real puede
+          aumentar varios euros. Si comparas distintos proveedores solo por el precio base, podrías elegir
+          una opción aparentemente más barata que en realidad termina costando más.
+        </p>
+        <p>
+          <strong>Ejemplo 3 (comparativa internacional):</strong> cambias de país y el impuesto varía.
+          Con el selector de país puedes estimar de inmediato cómo impacta esa diferencia en el total,
+          algo muy útil para compradores, freelancers, pequeñas tiendas online y equipos comerciales.
+        </p>
+      </section>
+
+      <section>
+        <h2>Preguntas frecuentes</h2>
+        <h3>¿Incluye IVA?</h3>
+        <p>
+          Sí. Elige un país y la calculadora aplicará el porcentaje de impuesto estimado correspondiente.
+          Puedes usarlo como referencia rápida para saber el precio final con IVA antes de pagar.
+        </p>
+
+        <h3>¿Funciona para servicios?</h3>
+        <p>
+          Sí, funciona tanto para servicios como para productos. Solo necesitas introducir precio base,
+          impuesto, comisión y cualquier gasto adicional que te aplique.
+        </p>
+
+        <h3>¿Es gratis?</h3>
+        <p>
+          Totalmente gratis. No pedimos registro, no instalamos cookies innecesarias y puedes usar la
+          herramienta todas las veces que quieras.
+        </p>
+      </section>
+
+      <section>
+        <h2>Preparada para crecer como landing SEO</h2>
+        <p>
+          Esta página está pensada como base para una estrategia de tráfico orgánico con futuras URLs
+          específicas como <code>/precio-final-con-iva</code>, <code>/precio-final-con-comisiones</code>
+          y <code>/precio-final-por-pais</code>. De ese modo puedes atacar búsquedas long-tail con contenido
+          especializado y mantener una arquitectura limpia, rápida y escalable.
+        </p>
+      </section>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
